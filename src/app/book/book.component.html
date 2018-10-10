@@ -1,0 +1,18 @@
+<div class="book">
+  <h2>{{ book?.title }}</h2>
+  <h6> {{ book?.subTitle }} </h6>
+  <dl>
+    <dt>Description</dt>
+    <dd>
+      <p [innerHtml]="book?.description"></p>
+    </dd>
+  </dl>
+  <h4>{{ book?.authors }}</h4>
+  <button *ngIf="!hasBook(book)" (click)="addBook(book)" >
+    Add To Library
+  </button>
+  <button *ngIf="hasBook(book)" (click)="removeBook(book)">
+    Remove From Library
+  </button>
+</div>
+

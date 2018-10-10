@@ -1,0 +1,10 @@
+<nav>
+  <ul class="pager">
+    <button [class.disabled]="page === 1" (click)="prev()">
+      PREVIOUS
+    </button>
+    <button [class.disabled]="page === totalPages" (click)="next()">
+      NEXT
+    </button>
+  </ul>
+</nav>
