@@ -17,18 +17,19 @@ export class ResultsEffects {
     ) { }
 
     @Effect() searchBooks = this.actions$ // what do I do with searchBooks?
+      .ofType<actions.SearchBooks>(actions.ACTION_TYPES.SEARCH_BOOKS)
       .pipe(
-        ofType<actions.SearchBooks>(actions.ACTION_TYPES.SEARCH_BOOKS),
         withLatestFrom(this.store$),
-        map(([action, store]) => {
+        switchMap(([action, store]) => {
           const { page, pageSize } = store.results;
           const startIndex = page * pageSize;
-          this.booksService
+          return this.booksService
             .searchBooks(action.payload, pageSize, startIndex) // returns observable, so we subscribe
-            .subscribe(data => this.store$.dispatch(new actions.FoundBooks(data)));
+            .pipe(
+              map(data => new actions.FoundBooks(data))
+            );
             // when we do eventually get the books, we will dispatch an action to the store
             // what action to dispatch in the meantime?
-          return { type: '???' };
         }),
         catchError(err => of({ type: 'ERROR_SEARCHING' }))
       );
@@ -60,11 +61,12 @@ export class ResultsEffects {
     @Effect() getBookDetails = this.actions$
           .pipe(
             ofType<actions.GetBookDetails>(actions.ACTION_TYPES.GET_BOOK_DETAILS),
-            map(action => {
-              this.booksService
+            switchMap(action => {
+              return this.booksService
                 .retrieveBook(action.payload)
-                .subscribe(book => this.store$.dispatch(new actions.GotBookDetails(book)));
-              return { type: '???' };
+                .pipe(
+                  map(book => new actions.GotBookDetails(book))
+                );
             })
           );
 }

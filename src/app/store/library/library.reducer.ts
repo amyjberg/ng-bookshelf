@@ -8,12 +8,12 @@ export const initialState: LibraryState = {
 
 export function reducer(state: LibraryState = initialState, action: fromActions.Action): LibraryState {
   switch (action.type) {
-    case fromActions.ACTION_TYPES.ADD_LIB_BOOK_SUCCESS:
+    case fromActions.ACTION_TYPES.ADD_BOOK_TO_LIB:
       return {
         ...state,
         books: [...state.books, action.payload]
       };
-    case fromActions.ACTION_TYPES.REMOVE_LIB_BOOK_SUCCESS:
+    case fromActions.ACTION_TYPES.REMOVE_BOOK_FROM_LIB:
       return {
         ...state,
         books: state.books.filter(book => book.id !== action.payload.id)
