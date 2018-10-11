@@ -16,7 +16,8 @@ export function reducer(state: ResultsState = initialState, action: fromActions.
     case fromActions.ACTION_TYPES.SEARCH_BOOKS:
       return {
         ...state,
-        loading: true,
+        loading: state.currentQuery === action.payload ? state.loading : true,
+        // trying to not reset 'loading' if user is just paging through
         initialized: true,
         currentQuery: action.payload
       };

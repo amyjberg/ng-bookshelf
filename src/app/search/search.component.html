@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <app-book-list [books]="books"></app-book-list>
+  <app-book-list *ngIf="!loading" [books]="books"></app-book-list>
 
   <div class="d-flex justify-content-center">
     <!-- TODO: Show pagnation -->
