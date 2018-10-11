@@ -7,7 +7,7 @@ export const ACTION_TYPES = {
   ADD_BOOK_TO_LIB: 'ADD_BOOK_TO_LIB',
   REMOVE_BOOK_FROM_LIB: 'REMOVE_BOOK_FROM_LIB',
   GET_BOOKS_IN_LIB: 'GET_BOOKS_IN_LIB'
-}
+};
 
 // ACTIONS
 export class AddBook implements Action {

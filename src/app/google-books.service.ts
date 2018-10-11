@@ -15,19 +15,19 @@ export class GoogleBooksService {
   public totalItems: number = 1;
   public _page: number = 1;
   public pageSize: number = 10;
-  public query: string="";
+  public query: string = '';
   public books: Book[];
   public newBook: Book;
 
   constructor(private http: Http) { }
 
   get startIndex() {
-    return this.page * this.pageSize
+    return this.page * this.pageSize;
   }
 
   get totalPages() {
     try {
-      return Math.ceil(this.totalItems / this.pageSize)
+      return Math.ceil(this.totalItems / this.pageSize);
     } catch (err) {
       console.error(err);
       return 0;
@@ -39,10 +39,10 @@ export class GoogleBooksService {
   }
 
   set page(val: number) {
-    console.log('trying to reset page value with', val)
+    console.log('trying to reset page value with', val);
     if (val !== this.page && val >= 1) {
       this._page = val;
-      this.searchBooks(this.query)
+      this.searchBooks(this.query);
       console.log('I think we did it!');
     }
   }
@@ -86,10 +86,10 @@ export class GoogleBooksService {
       item.volumeInfo.publishedDate,
       item.volumeInfo.description,
       item.volumeInfo.categories ? item.volumeInfo.categories.map((item) => item.split("/").pop().trim()) : ['N/A'],
-      null, //item.volumeInfo.imageLinks.thumbnail
+      null, // item.volumeInfo.imageLinks.thumbnail
       // item.volumeInfo.imageLinks.smallThumbnail
       null
-    )
+    );
   }
 
 }

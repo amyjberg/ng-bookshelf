@@ -18,12 +18,12 @@ export class LibraryService {
   private load() {
     let savedBooks = localStorage.getItem('books');
     if (!savedBooks) {
-      return
+      return;
     }
     savedBooks = JSON.parse(savedBooks);
 
-    for(let i = 0; i < savedBooks.length; i++) {
-      let savedBook = savedBooks[i];
+    for (let i = 0; i < savedBooks.length; i++) {
+      const savedBook = savedBooks[i];
       this.books.push(Object.assign(new Book(null, null, null, null, null, null, null, null, null, null), savedBook))
     }
   }
@@ -31,12 +31,12 @@ export class LibraryService {
   addBook(book: Book) {
     if (!this.hasBook(book)) {
       this.books.push(book);
-      this.save()
+      this.save();
     }
   }
 
   removeBook(book: Book) {
-    let index = this.findIndex(book);
+    const index = this.findIndex(book);
     this.books.splice(index, 1);
     this.save();
   }
@@ -48,7 +48,7 @@ export class LibraryService {
   findIndex(book: Book): number {
     for (let i = 0; i < this.books.length; i++) {
       if (this.books[i].id === book.id) {
-        return i
+        return i;
       }
     }
     return -1;

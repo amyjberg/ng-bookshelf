@@ -7,7 +7,7 @@ import * as selectors from './library.selectors';
 // import any models I need, like book?
 
 export interface LibraryState {
-  books: Book[]
+  books: Book[];
 }
 
 export const libraryStore = {
@@ -15,4 +15,4 @@ export const libraryStore = {
   actions,
   selectors,
   effects: LibraryEffects
-}
+};
