@@ -2,17 +2,18 @@ import { LibraryState } from './index';
 import * as fromActions from './library.actions';
 
 export const initialState: LibraryState = {
-  books: []
+  books: [],
+  loading: false
 };
 
 export function reducer(state: LibraryState = initialState, action: fromActions.Action): LibraryState {
   switch (action.type) {
-    case fromActions.ACTION_TYPES.ADD_BOOK_TO_LIB:
+    case fromActions.ACTION_TYPES.ADD_LIB_BOOK_SUCCESS:
       return {
         ...state,
         books: [...state.books, action.payload]
       };
-    case fromActions.ACTION_TYPES.REMOVE_BOOK_FROM_LIB:
+    case fromActions.ACTION_TYPES.REMOVE_LIB_BOOK_SUCCESS:
       return {
         ...state,
         books: state.books.filter(book => book.id !== action.payload.id)
@@ -20,8 +21,16 @@ export function reducer(state: LibraryState = initialState, action: fromActions.
     case fromActions.ACTION_TYPES.GET_BOOKS_IN_LIB:
       return {
         ...state,
+        loading: true
+      };
+    case fromActions.ACTION_TYPES.GOT_LIB_BOOKS:
+      return {
+        ...state,
+        loading: false,
         books: action.payload
       };
+    case fromActions.ACTION_TYPES.ADD_BOOK_TO_LIB:
+    case fromActions.ACTION_TYPES.REMOVE_BOOK_FROM_LIB:
     default:
       return state;
   }

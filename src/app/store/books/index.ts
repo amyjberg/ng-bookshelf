@@ -1,8 +1,8 @@
 import { Book } from './../../shared/book';
 import * as actions from './books.actions';
 import { reducer } from './books.reducer';
-import { BookEffects } from './books.effects';
-import * as selectors from './books.selectors';
+// import { BookEffects } from './books.effects';
+// import * as selectors from './books.selectors';
 
 export interface BookState {
   books: Book[];
@@ -12,6 +12,6 @@ export interface BookState {
 export const bookStore = {
   reducer,
   actions,
-  selectors,
-  effects: BookEffects
+  // selectors,
+  // effects: BookEffects
 };
