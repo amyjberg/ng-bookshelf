@@ -12,6 +12,7 @@ export interface ResultsState {
   totalItems: number;
   pageSize: number;
   currentQuery: string;
+  selectedBook: Book;
 }
 
 export const resultsStore = {

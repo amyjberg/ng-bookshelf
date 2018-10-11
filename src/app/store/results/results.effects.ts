@@ -9,8 +9,6 @@ import { of } from 'rxjs';
 
 // note: actions is an observable so we can listen to the actions hitting the store
 
-
-
 @Injectable()
 export class ResultsEffects {
   constructor(private actions$: Actions,
@@ -25,12 +23,12 @@ export class ResultsEffects {
         map(([action, store]) => {
           const { page, pageSize } = store.results;
           const startIndex = page * pageSize;
-          const books = this.booksService
+          this.booksService
             .searchBooks(action.payload, pageSize, startIndex) // returns observable, so we subscribe
             .subscribe(data => this.store$.dispatch(new actions.FoundBooks(data)));
             // when we do eventually get the books, we will dispatch an action to the store
             // what action to dispatch in the meantime?
-            return { type: '???' };
+          return { type: '???' };
         }),
         catchError(err => of({ type: 'ERROR_SEARCHING' }))
       );
@@ -59,4 +57,14 @@ export class ResultsEffects {
           catchError(err => of({ type: 'ERROR_CHANGING_PAGE' }))
         );
 
+    @Effect() getBookDetails = this.actions$
+          .pipe(
+            ofType<actions.GetBookDetails>(actions.ACTION_TYPES.GET_BOOK_DETAILS),
+            map(action => {
+              this.booksService
+                .retrieveBook(action.payload)
+                .subscribe(book => this.store$.dispatch(new actions.GotBookDetails(book)));
+              return { type: '???' };
+            })
+          );
 }

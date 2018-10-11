@@ -5,7 +5,9 @@ import { Book } from '../../shared/book';
 export const ACTION_TYPES = {
   SEARCH_BOOKS: 'SEARCH_BOOKS',
   FOUND_BOOKS: 'FOUND_BOOKS',
-  SET_PAGE: 'SET_PAGE'
+  SET_PAGE: 'SET_PAGE',
+  GET_BOOK_DETAILS: 'GET_BOOK_DETAILS',
+  GOT_BOOK_DETAILS: 'GOT_BOOK_DETAILS'
 };
 
 // ACTIONS
@@ -28,5 +30,17 @@ export class SetPage implements Action {
   constructor(public payload) {}
 }
 
+// payload here will be the id of the book?
+export class GetBookDetails implements Action {
+  readonly type = ACTION_TYPES.GET_BOOK_DETAILS;
+  constructor(public payload) {}
+}
+
+// this payload will actually have the book info
+export class GotBookDetails implements Action {
+  readonly type = ACTION_TYPES.GOT_BOOK_DETAILS;
+  constructor(public payload) {}
+}
+
 // EXPORT ACTION TYPES
-export type Action = | SearchBooks | FoundBooks;
+export type Action = | SearchBooks | FoundBooks | SetPage;

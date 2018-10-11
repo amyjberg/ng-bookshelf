@@ -8,7 +8,8 @@ export const initialState: ResultsState = {
   page: 1,
   totalItems: 1,
   pageSize: 10,
-  currentQuery: ''
+  currentQuery: '',
+  selectedBook: null
 };
 
 export function reducer(state: ResultsState = initialState, action: fromActions.Action): ResultsState {
@@ -39,6 +40,17 @@ export function reducer(state: ResultsState = initialState, action: fromActions.
       return {
         ...state,
         page: validPage ? newPage : currentPage
+      };
+    case fromActions.ACTION_TYPES.GET_BOOK_DETAILS:
+      return {
+        ...state,
+        loading: true
+      };
+    case fromActions.ACTION_TYPES.GOT_BOOK_DETAILS:
+      return {
+        ...state,
+        selectedBook: action.payload,
+        loading: false
       };
     default:
       return state;

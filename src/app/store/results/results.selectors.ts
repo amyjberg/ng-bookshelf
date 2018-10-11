@@ -38,3 +38,8 @@ export const getStartIndex = createSelector(
   getResultsState,
   (resultsState: ResultsState) => resultsState.page * resultsState.pageSize
   );
+
+export const getSelectedBook = createSelector(
+  getResultsState,
+  (resultsState: ResultsState) => resultsState.selectedBook
+  );
