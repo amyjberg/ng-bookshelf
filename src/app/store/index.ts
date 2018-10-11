@@ -1,18 +1,23 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { libraryStore, LibraryState } from './library'
+import { libraryStore, LibraryState } from './library';
+import { resultsStore, ResultsState } from './results';
 
 export interface AppState {
-  library: LibraryState
+  library: LibraryState;
+  results: ResultsState;
 }
 
 export const appStore = {
-  library: libraryStore
-}
+  library: libraryStore,
+  results: resultsStore
+};
 
 export const appEffects = [
-  libraryStore.effects
-]
+  libraryStore.effects,
+  resultsStore.effects
+];
 
 export const appReducers: ActionReducerMap<AppState> = {
-  library: libraryStore.reducer
-}
+  library: libraryStore.reducer,
+  results: resultsStore.reducer
+};
