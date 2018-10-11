@@ -20,34 +20,37 @@
 
     <div class="text-center">
       <p
-        *ngIf="initialized$ && loading$"
-        class="lead">Loading...</p>
+        *ngIf="initialized && loading"
+        class="lead loading">Loading...</p>
 
-      <!-- TODO: Show when no results are returned from the API -->
       <p
-        *ngIf="initialized$ && !loading$ && !books$?.length"
-        class="lead">No results returned</p>
+        *ngIf="initialized && !loading && !books?.length"
+        class="lead no-results">No results returned</p>
 
-      <!-- TODO: Show when the user hasn't performed a search yet -->
       <p
-        *ngIf="!initialized$"
+        *ngIf="!initialized"
         class="lead">Enter a search string above and press search</p>
     </div>
   </div>
 
-  <!-- TODO: Show the results of the search -->
-  <app-book-list [books]="books$ | async"></app-book-list>
-  <!-- <ul>
-    <li *ngFor="let book of googleBookService.books">{{book.title}}</li>
-  </ul> -->
+  <app-book-list [books]="books"></app-book-list>
 
   <div class="d-flex justify-content-center">
     <!-- TODO: Show pagnation -->
-    <app-pager [page]="page$ | async"
-               [totalPages]="totalPages$ | async"
-               (changePage)="page$ = $event"
+    <app-pager [page]="page"
+               [totalPages]="totalPages"
+               (changePage)="changePage($event)"
                >
     </app-pager>
   </div>
 </div>
+
+<!--
+  on 'changePage' event from <app-pager />,
+  this component executes the
+    "page = $event"
+  code, updating it's own this.page value to
+  what was submitted by the child component
+
+-->
 

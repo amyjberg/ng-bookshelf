@@ -21,16 +21,16 @@ export class ResultsEffects {
     @Effect() searchBooks = this.actions$ // what do I do with searchBooks?
       .pipe(
         ofType<actions.SearchBooks>(actions.ACTION_TYPES.SEARCH_BOOKS),
-        tap(action => console.log('=== INSIDE SEARCH EFFECT with this action:', action)),
         withLatestFrom(this.store$),
         map(([action, store]) => {
           const { page, pageSize } = store.results;
           const startIndex = page * pageSize;
-          console.log('-- before bookService search --');
           const books = this.booksService
-            .searchBooks(action.payload, pageSize, startIndex) // returns observable
+            .searchBooks(action.payload, pageSize, startIndex) // returns observable, so we subscribe
             .subscribe(data => this.store$.dispatch(new actions.FoundBooks(data)));
-            return { type: 'RETRIEVING_RESULTS' };
+            // when we do eventually get the books, we will dispatch an action to the store
+            // what action to dispatch in the meantime?
+            return { type: '???' };
         }),
         catchError(err => of({ type: 'ERROR_SEARCHING' }))
       );
@@ -41,8 +41,9 @@ export class ResultsEffects {
           withLatestFrom(this.store$),
           map(([action, store]) => {
             const newPage = action.payload;
-            const { page, currentQuery } = store.results;
-            if (newPage !== page && newPage >= 1) {
+            const { currentQuery } = store.results; // store has already updated, so page equals newpage
+            if (newPage >= 1) {
+              console.log('INSIDE EFFECT ready to make a new search!');
               // SET_PAGE has already updated the new page in the store...
               // dispatch a searchBooks with the same query again
               // this action will be intercepted by the searchBooks effect,
@@ -50,6 +51,7 @@ export class ResultsEffects {
               return new actions.SearchBooks(currentQuery);
             } else {
               // SET_PAGE could not have updated the page in the store...
+              console.log('INSIDE EFFECT page was out of range');
               return { type: 'PAGE_OUT_OF_RANGE' };
             }
 

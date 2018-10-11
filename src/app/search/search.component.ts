@@ -15,25 +15,24 @@ import { getResults, areResultsLoading, hasSearchInitialized, getTotalPages, get
 export class SearchComponent implements OnInit {
   // page, totalPages, initialized, loading, books
   private term = '';
-  private page$: Observable<number>;
-  private totalPages$: Observable<number>;
-  private initialized$: Observable<boolean>;
-  private loading$: Observable<boolean>;
-  private books$: Observable<Book[]>;
+  private page = 1;
+  private totalPages = 1;
+  private initialized = false;
+  private loading = false;
+  private books: Book[];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private _store: Store<any>) {
     // activatedroute route gives us access to the current route
     // route.params is an observable -- we do something every time it updates?
-    this.books$ = _store.select(getResults);
-    this.loading$ = _store.select(areResultsLoading);
-    this.initialized$ = _store.select(hasSearchInitialized);
-    this.totalPages$ = _store.select(getTotalPages);
-    this.page$ = _store.select(getCurrentPage);
+    _store.select(getResults).subscribe(results => this.books = results);
+    _store.select(areResultsLoading).subscribe(loading => this.loading = loading);
+    _store.select(hasSearchInitialized).subscribe(initialized => this.initialized = initialized);
+    _store.select(getTotalPages).subscribe(totalPages => this.totalPages = totalPages);
+    _store.select(getCurrentPage).subscribe(page => this.page = page);
 
     this.route.params.subscribe(params => {
-      console.log('line 36 search component ts', params['term']);
       if (params['term']) {
         // whenever our route params for 'term' update, we want to call 'onsearch'
         this.onSearch(params['term']);
@@ -55,6 +54,11 @@ export class SearchComponent implements OnInit {
     // want to update url bar with search?
     console.log('*** we are searching with the term:', term);
     this._store.dispatch(new actions.SearchBooks(term)); // will be intercepted by effect
+  }
+
+  changePage(page: number) {
+    console.log('changing the page to:', page);
+    this._store.dispatch(new actions.SetPage(page));
   }
 
   ngOnInit() {
