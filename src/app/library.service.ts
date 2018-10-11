@@ -12,7 +12,7 @@ export class LibraryService {
   }
 
   private save() {
-    localStorage.setItem('books', JSON.stringify(this.books))
+    localStorage.setItem('books', JSON.stringify(this.books));
   }
 
   private load() {

@@ -15,16 +15,15 @@ export class LibraryEffects {
               public libraryService: LibraryService
     ) {  }
 
-    // although library doesn't involve anything async,
-    // we DO need to use the library service, which is outside the store
-    // so we need effects
-
     @Effect() getBooksInLib = this.actions$
       .pipe(
         ofType(actions.ACTION_TYPES.GET_BOOKS_IN_LIB),
         tap(action => console.log('inside getBooksInLib effect', action)),
         // send back the books currently in the library in got_lib_books action
-        map(action => new actions.GotLibBooks(this.libraryService.books))
+        map(action => new actions.GotLibBooks(this.libraryService.books)),
+        catchError((err) => {
+          return of({ type: 'ERROR' })
+        })
       );
 
     @Effect() addBook = this.actions$
@@ -50,5 +49,4 @@ export class LibraryEffects {
             }),
             map(action => new actions.RemoveLibBookSuccess(action.payload))
           );
-
 }

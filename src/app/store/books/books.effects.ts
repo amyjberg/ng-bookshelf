@@ -18,12 +18,17 @@ export class BooksEffects {
 
     @Effect() searchBooks = this.actions$
       .pipe(
-        ofType(actions.ACTION_TYPES.SEARCH_BOOKS),
+        ofType<actions.SearchBooks>(actions.ACTION_TYPES.SEARCH_BOOKS),
         tap(action => console.log(action)),
-        // map(action => {
-        //   // no payload on type action?
-        //   this.booksService.searchBooks(action.payload)
-        // })
+        map(action => {
+          // no payload on type action?
+          // note: this doesn't return anything -- just updates bookService.books
+          this.booksService
+            .searchBooks(action.payload)
+            .subscribe(books => new actions.FoundBooks(books));
+          // async so will it finish in time for the map?
+        }),
+        map(action => new actions.FoundBooks(this.booksService.books))
       );
 
 }

@@ -52,7 +52,7 @@ export class GoogleBooksService {
     this.loading = true;
     this.initialized = true;
     this.books = [];
-    this.http.get(`${this.API_PATH}?q=${this.query}&maxResults=${this.pageSize}&startIndex=${this.startIndex}&key=${key}`)
+    return this.http.get(`${this.API_PATH}?q=${this.query}&maxResults=${this.pageSize}&startIndex=${this.startIndex}&key=${key}`)
       .pipe(
         map(res => res.json()),
         tap(data => {
@@ -61,10 +61,10 @@ export class GoogleBooksService {
         map(data => data.items ? data.items : []),
         map(items => items.map(item => this.bookFactory(item))),
         tap(_ => this.loading = false)
-      )
-      .subscribe((books) => {
-        this.books = books;
-      });
+      );
+      // .subscribe((books) => {
+      //   this.books = books;
+      // }); // moving over to book effects?
   }
 
   retrieveBook(bookId: string) {
