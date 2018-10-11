@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, catchError } from 'rxjs/operators';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Book } from './shared/book';
 import key from '../../secrets';
 
@@ -19,7 +19,11 @@ export class GoogleBooksService {
       .pipe(
         map(res => res.json()),
         map(data => data.items ? data.items : []),
-        map(items => items.map(item => this.bookFactory(item)))
+        map(items => items.map(item => this.bookFactory(item))),
+        // catchError(err => {
+        //   console.log('uh oh, error!', err.message);
+        //   return of(err);
+        // })
       );
   }
 

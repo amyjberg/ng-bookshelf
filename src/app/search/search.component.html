@@ -20,32 +20,32 @@
 
     <div class="text-center">
       <p
-        *ngIf="googleBookService.initialized && googleBookService.loading"
+        *ngIf="initialized$ && loading$"
         class="lead">Loading...</p>
 
       <!-- TODO: Show when no results are returned from the API -->
       <p
-        *ngIf="googleBookService.initialized && !googleBookService.loading && !googleBookService.books?.length"
+        *ngIf="initialized$ && !loading$ && !books$?.length"
         class="lead">No results returned</p>
 
       <!-- TODO: Show when the user hasn't performed a search yet -->
       <p
-        *ngIf="!googleBookService.initialized"
+        *ngIf="!initialized$"
         class="lead">Enter a search string above and press search</p>
     </div>
   </div>
 
   <!-- TODO: Show the results of the search -->
-  <app-book-list [books]="googleBookService.books"></app-book-list>
+  <app-book-list [books]="books$ | async"></app-book-list>
   <!-- <ul>
     <li *ngFor="let book of googleBookService.books">{{book.title}}</li>
   </ul> -->
 
   <div class="d-flex justify-content-center">
     <!-- TODO: Show pagnation -->
-    <app-pager [page]="googleBookService.page"
-               [totalPages]="googleBookService.totalPages"
-               (changePage)="googleBookService.page = $event"
+    <app-pager [page]="page$ | async"
+               [totalPages]="totalPages$ | async"
+               (changePage)="page$ = $event"
                >
     </app-pager>
   </div>

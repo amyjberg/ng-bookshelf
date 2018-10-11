@@ -5,9 +5,11 @@ import { Injectable } from '@angular/core';
 import { switchMap, map, catchError, tap, withLatestFrom } from 'rxjs/operators';
 import * as actions from './results.actions';
 import { GoogleBooksService } from '../../google-books.service';
+import { of } from 'rxjs';
 
-// NOTE: this.actions$ is the 'actions observable' -- an observable of all actions dispatched to the store
-// emits the latest action AFTER the action has gone through the reducers
+// note: actions is an observable so we can listen to the actions hitting the store
+
+
 
 @Injectable()
 export class ResultsEffects {
@@ -16,18 +18,21 @@ export class ResultsEffects {
               public booksService: GoogleBooksService
     ) { }
 
-    @Effect() searchBooks = this.actions$
+    @Effect() searchBooks = this.actions$ // what do I do with searchBooks?
       .pipe(
         ofType<actions.SearchBooks>(actions.ACTION_TYPES.SEARCH_BOOKS),
-        tap(action => console.log(action)),
+        tap(action => console.log('=== INSIDE SEARCH EFFECT with this action:', action)),
         withLatestFrom(this.store$),
         map(([action, store]) => {
           const { page, pageSize } = store.results;
           const startIndex = page * pageSize;
-          this.booksService
-            .searchBooks(action.payload, pageSize, startIndex)
-            .subscribe(books => new actions.FoundBooks(books));
-        })
+          console.log('-- before bookService search --');
+          const books = this.booksService
+            .searchBooks(action.payload, pageSize, startIndex) // returns observable
+            .subscribe(data => this.store$.dispatch(new actions.FoundBooks(data)));
+            return { type: 'RETRIEVING_RESULTS' };
+        }),
+        catchError(err => of({ type: 'ERROR_SEARCHING' }))
       );
 
     @Effect() setPage = this.actions$
@@ -38,17 +43,18 @@ export class ResultsEffects {
             const newPage = action.payload;
             const { page, currentQuery } = store.results;
             if (newPage !== page && newPage >= 1) {
-              // assume the SET_PAGE has already updated the new page in the store...
+              // SET_PAGE has already updated the new page in the store...
               // dispatch a searchBooks with the same query again
-              // this action will be intercepted by the effect,
-              // which will use the updated page from SET_PAGE to
-              // make another search
+              // this action will be intercepted by the searchBooks effect,
+              // which will use the now-updated page and make another search
               return new actions.SearchBooks(currentQuery);
             } else {
-              return { type: 'ERROR' };
+              // SET_PAGE could not have updated the page in the store...
+              return { type: 'PAGE_OUT_OF_RANGE' };
             }
 
-          })
+          }),
+          catchError(err => of({ type: 'ERROR_CHANGING_PAGE' }))
         );
 
 }

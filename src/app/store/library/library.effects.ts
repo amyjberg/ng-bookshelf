@@ -22,7 +22,7 @@ export class LibraryEffects {
         // send back the books currently in the library in got_lib_books action
         map(action => new actions.GotLibBooks(this.libraryService.books)),
         catchError((err) => {
-          return of({ type: 'ERROR' })
+          return of({ type: 'ERROR' });
         })
       );
 

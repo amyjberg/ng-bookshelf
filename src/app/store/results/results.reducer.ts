@@ -14,6 +14,8 @@ export const initialState: ResultsState = {
 export function reducer(state: ResultsState = initialState, action: fromActions.Action): ResultsState {
   switch (action.type) {
     case fromActions.ACTION_TYPES.SEARCH_BOOKS:
+      console.log('Inside Reducer with Search_Books action');
+      console.log('current query:', action.payload);
       return {
         ...state,
         loading: true,
@@ -21,11 +23,13 @@ export function reducer(state: ResultsState = initialState, action: fromActions.
         currentQuery: action.payload
       };
     case fromActions.ACTION_TYPES.FOUND_BOOKS:
+      console.log('inside reducer with Found_Books action - ');
+      console.log('did we get books?', action.payload);
       return {
         ...state,
-        books: action.payload,
+        books: action.payload ? action.payload : [],
         loading: false,
-        totalItems: action.payload.length
+        totalItems: action.payload ? action.payload.length : 0
       };
     case fromActions.ACTION_TYPES.SET_PAGE:
       // check to make sure the page is okay

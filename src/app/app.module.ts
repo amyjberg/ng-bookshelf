@@ -15,6 +15,10 @@ import { routes } from './app.routes';
 import { GoogleBooksService } from './google-books.service';
 import { LibraryService } from './library.service';
 
+import { StoreModule } from '@ngrx/store';
+import { appReducers, appEffects } from './store';
+import { EffectsModule } from '@ngrx/effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +34,9 @@ import { LibraryService } from './library.service';
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    StoreModule.forRoot({ library: appReducers.library, results: appReducers.results }),
+    EffectsModule.forRoot(appEffects)
   ],
   providers: [GoogleBooksService, LibraryService],
   bootstrap: [AppComponent]
