@@ -24,9 +24,6 @@ export class BookComponent implements OnInit {
         this.getBook(params['id'])
       }
     })
-
-    console.log('init');
-
   }
 
   getBook(bookId: string) {
