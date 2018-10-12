@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Book } from '../shared/book';
 import { map, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,7 @@ import { getLibraryBooks } from '../store/library/library.selectors';
   templateUrl: './book.component.html',
   styleUrls: ['./book.component.css']
 })
-export class BookComponent implements OnInit {
+export class BookComponent implements OnDestroy {
 
   book: Book;
   libraryBooks: Book[];
@@ -64,8 +64,14 @@ export class BookComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    // no need to fetch the book because we subscribe to the observable that gives us the params, and that subscribe will fetch the book
+  // ngOnInit() {
+  //   // no need to fetch the book because we subscribe to the observable that gives us the params, and that subscribe will fetch the book
+  // }
+
+  ngOnDestroy() {
+    // try clearing the selected book from the store?
+    console.log('inside ondestroy lifecycle hook');
+    this._store.dispatch(new actions.ClearSelectedBook(null));
   }
 
 }

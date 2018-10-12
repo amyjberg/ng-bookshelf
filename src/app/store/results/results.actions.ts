@@ -7,7 +7,8 @@ export const ACTION_TYPES = {
   FOUND_BOOKS: 'FOUND_BOOKS',
   SET_PAGE: 'SET_PAGE',
   GET_BOOK_DETAILS: 'GET_BOOK_DETAILS',
-  GOT_BOOK_DETAILS: 'GOT_BOOK_DETAILS'
+  GOT_BOOK_DETAILS: 'GOT_BOOK_DETAILS',
+  CLEAR_SELECTED_BOOK: 'CLEAR_SELECTED_BOOK'
 };
 
 // ACTIONS
@@ -42,5 +43,17 @@ export class GotBookDetails implements Action {
   constructor(public payload) {}
 }
 
+export class ClearSelectedBook implements Action {
+  readonly type = ACTION_TYPES.CLEAR_SELECTED_BOOK;
+  constructor(public payload) {}
+}
+
 // EXPORT ACTION TYPES
-export type Action = | SearchBooks | FoundBooks | SetPage;
+export type Action =
+  | SearchBooks
+  | FoundBooks
+  | SetPage
+  | GetBookDetails
+  | GotBookDetails
+  | ClearSelectedBook
+  ;

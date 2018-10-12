@@ -30,7 +30,6 @@ export function reducer(state: ResultsState = initialState, action: fromActions.
         totalItems: action.payload ? action.payload.length : 0
       };
     case fromActions.ACTION_TYPES.SET_PAGE:
-      console.log('trying to set the page in the reducer');
       const currentPage = state.page;
       const newPage = action.payload;
       let validPage = false;
@@ -51,6 +50,11 @@ export function reducer(state: ResultsState = initialState, action: fromActions.
         ...state,
         selectedBook: action.payload,
         loading: false
+      };
+    case fromActions.ACTION_TYPES.CLEAR_SELECTED_BOOK:
+      return {
+        ...state,
+        selectedBook: null
       };
     default:
       return state;
