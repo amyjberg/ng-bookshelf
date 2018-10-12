@@ -1,4 +1,4 @@
-<nav>
+<nav *ngIf="books.length" >
   <ul class="pager">
     <button [class.disabled]="page === 1" (click)="prev()">
       PREVIOUS

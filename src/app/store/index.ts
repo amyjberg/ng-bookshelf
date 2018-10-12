@@ -13,7 +13,6 @@ export const appStore = {
 };
 
 export const appEffects = [
-  libraryStore.effects,
   resultsStore.effects
 ];
 

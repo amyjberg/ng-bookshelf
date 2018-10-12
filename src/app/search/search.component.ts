@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GoogleBooksService } from '../google-books.service';
 import { Book } from '../shared/book';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';

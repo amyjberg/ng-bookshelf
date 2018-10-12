@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as actions from '../store/results/results.actions';
+import { Book } from '../shared/book';
 
 @Component({
   selector: 'app-pager',
@@ -10,7 +11,7 @@ export class PagerComponent implements OnInit {
 
   @Input() private page = 1;
   @Input() private totalPages: number;
-  @Input() private _store;
+  @Input() private books: Book[];
 
   constructor() { }
 
@@ -20,13 +21,11 @@ export class PagerComponent implements OnInit {
   next() {
     console.log('clicked next');
     this.changePage.emit(this.page + 1);
-    // I want to dispatch a set page event? but then this component needs access to the store :(
   }
 
   prev() {
     this.changePage.emit(this.page - 1);
     console.log('clicked prev');
-    // I want to dispatch a set page event?
   }
 
   ngOnInit() {

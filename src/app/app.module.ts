@@ -13,7 +13,6 @@ import { SearchComponent } from './search/search.component';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { GoogleBooksService } from './google-books.service';
-import { LibraryService } from './library.service';
 
 import { StoreModule } from '@ngrx/store';
 import { appReducers, appEffects } from './store';
@@ -38,7 +37,7 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forRoot({ library: appReducers.library, results: appReducers.results }),
     EffectsModule.forRoot(appEffects)
   ],
-  providers: [GoogleBooksService, LibraryService],
+  providers: [GoogleBooksService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

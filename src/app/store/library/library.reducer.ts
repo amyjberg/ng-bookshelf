@@ -18,17 +18,6 @@ export function reducer(state: LibraryState = initialState, action: fromActions.
         ...state,
         books: state.books.filter(book => book.id !== action.payload.id)
       };
-    case fromActions.ACTION_TYPES.GET_BOOKS_IN_LIB:
-      return {
-        ...state,
-        loading: true
-      };
-    case fromActions.ACTION_TYPES.GOT_LIB_BOOKS:
-      return {
-        ...state,
-        loading: false,
-        books: action.payload
-      };
     case fromActions.ACTION_TYPES.ADD_BOOK_TO_LIB:
     case fromActions.ACTION_TYPES.REMOVE_BOOK_FROM_LIB:
     default:

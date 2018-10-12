@@ -1,9 +1,7 @@
-import { GoogleBooksService } from './../google-books.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Book } from '../shared/book';
 import { map, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LibraryService } from '../library.service';
 import { Store } from '@ngrx/store';
 import { getSelectedBook } from '../store/results/results.selectors';
 import * as actions from '../store/results/results.actions';
@@ -20,9 +18,7 @@ export class BookComponent implements OnInit {
   book: Book;
   libraryBooks: Book[];
 
-  constructor(private googleBooksService: GoogleBooksService,
-              private libraryService: LibraryService,
-              private _store: Store<any>,
+  constructor(private _store: Store<any>,
               private router: Router,
               private route: ActivatedRoute) {
     // we want access to the route so we can get the bookId
@@ -59,7 +55,6 @@ export class BookComponent implements OnInit {
       // dispatch some action to store that adds it to library
       this._store.dispatch(new libactions.AddLibBook(book));
     }
-    // this.libraryService.addBook(book);
   }
 
   removeBook(book: Book) {
@@ -67,7 +62,6 @@ export class BookComponent implements OnInit {
       // dispatch some action to stoe that remvoes it from library
       this._store.dispatch(new libactions.RemoveLibBook(book));
     }
-    // this.libraryService.removeBook(book);
   }
 
   ngOnInit() {
