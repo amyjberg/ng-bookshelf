@@ -4,7 +4,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as actions from '../store/results/results.actions';
 import { Observable } from 'rxjs';
-import { getResults, areResultsLoading, hasSearchInitialized, getTotalPages, getCurrentPage, getCurrentSearchTerm } from '../store/results/results.selectors';
+import {
+  getResults,
+  areResultsLoading,
+  hasSearchInitialized,
+  getTotalPages,
+  getCurrentPage
+} from '../store/results/results.selectors';
 
 @Component({
   selector: 'app-search',
