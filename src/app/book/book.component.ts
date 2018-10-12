@@ -68,7 +68,7 @@ export class BookComponent implements OnDestroy {
   //   // no need to fetch the book because we subscribe to the observable that gives us the params, and that subscribe will fetch the book
   // }
 
-  ngOnDestroy() {
+  ngOnDestroy() { // should implement the interface with this, but technically don't have to
     // try clearing the selected book from the store?
     console.log('inside ondestroy lifecycle hook');
     this._store.dispatch(new actions.ClearSelectedBook(null));

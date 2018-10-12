@@ -43,3 +43,8 @@ export const getSelectedBook = createSelector(
   getResultsState,
   (resultsState: ResultsState) => resultsState.selectedBook
   );
+
+export const getCurrentSearchTerm = createSelector(
+  getResultsState,
+  (resultsState: ResultsState) => resultsState.currentQuery
+  );

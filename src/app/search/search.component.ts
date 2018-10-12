@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as actions from '../store/results/results.actions';
 import { Observable } from 'rxjs';
-import { getResults, areResultsLoading, hasSearchInitialized, getTotalPages, getCurrentPage } from '../store/results/results.selectors';
+import { getResults, areResultsLoading, hasSearchInitialized, getTotalPages, getCurrentPage, getCurrentSearchTerm } from '../store/results/results.selectors';
 
 @Component({
   selector: 'app-search',
@@ -44,7 +44,8 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['search', {
         term: this.term
       }
-    ]); // updates url path, which we can access via the activated route
+    ]); // updates url path, which we can access via the activated route (this.route.params)
+    // we are subscribed to changes in the params, so our callback on line 34 will fire
   }
 
   onSearch(term: string) {

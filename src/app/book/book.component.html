@@ -1,4 +1,4 @@
-<div class="book">
+<div *ngIf="book" class="book">
   <h2>{{ book?.title }}</h2>
   <h6> {{ book?.subTitle }} </h6>
   <dl>
@@ -14,5 +14,8 @@
   <button *ngIf="hasBook(book)" (click)="removeBook(book)">
     Remove From Library
   </button>
+</div>
+<div class="loading" *ngIf="!book">
+  Loading...
 </div>
 
