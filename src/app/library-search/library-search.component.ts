@@ -16,7 +16,7 @@ import { EventEmitter } from 'events';
   }]
 })
 export class LibrarySearchComponent implements OnInit, ControlValueAccessor {
-  value = '';
+  value = 'hello';
   @Input() books: Book[];
   onChange = (a) => {};
   onTouched = () => {};
@@ -24,33 +24,36 @@ export class LibrarySearchComponent implements OnInit, ControlValueAccessor {
   constructor() { }
 
   ngOnInit() {
+    console.log('CHILD INIT with value:', this.value);
   }
 
   writeValue(value) {
-    console.log('writing value!', value);
-    if (value !== 'bob') {
-      this.value = value;
-    }
+    console.log('---> writing value:', value, '<---');
+    this.value = value;
+    // initially sets value to null
+    // after registering, it gets the value of the ngModel test from parent component
+    // 'This method is called by the forms API to write to the view
+    // when programmatic changes from model to view are requested'
   }
 
   registerOnChange(fn) {
-    console.log('registering on change fn!!');
+    console.log('REGISTERING: onChange');
     this.onChange = function(a) {
-      console.log('calling onChange');
+      console.log('calling onChange with', a);
       return fn(a);
     };
   }
 
   registerOnTouched(fn) {
-    console.log('registering on touched fn!!');
+    console.log('REGISTERING: onTouched');
     this.onTouched = function() {
-      console.log('calling onTouched');
+      console.log('calling onTouched, value now', this.value);
       return fn();
     };
   }
 
   changed(event) {
-    console.log('==*== inside changed ==*==');
+    console.log('==*== inside changed(e) ==*==');
     this.onChange(event.target.value);
     this.onTouched();
   }

@@ -20,6 +20,7 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('PARENT INIT with test:', this.test);
   }
 
 }
