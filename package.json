@@ -23,6 +23,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "^6.1.0",
     "@ngrx/store": "^6.1.0",
+    "@types/jquery": "^3.3.19",
     "core-js": "^2.5.4",
     "ng": "0.0.0",
     "rxjs": "~6.2.0",

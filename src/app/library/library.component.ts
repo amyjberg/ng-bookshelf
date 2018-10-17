@@ -13,6 +13,8 @@ export class LibraryComponent implements OnInit {
 
   books: Book[] = [];
 
+  test = 'hi';
+
   constructor(private _store: Store<any>) {
     this._store.select(getLibraryBooks).subscribe(books => this.books = books);
   }

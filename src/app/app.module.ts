@@ -17,6 +17,7 @@ import { GoogleBooksService } from './google-books.service';
 import { StoreModule } from '@ngrx/store';
 import { appReducers, appEffects } from './store';
 import { EffectsModule } from '@ngrx/effects';
+import { LibrarySearchComponent } from './library-search/library-search.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EffectsModule } from '@ngrx/effects';
     LibraryComponent,
     PagerComponent,
     SearchComponent,
+    LibrarySearchComponent,
   ],
   imports: [
     BrowserModule,
